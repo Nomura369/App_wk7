@@ -1,16 +1,13 @@
-import 'react-native-gesture-handler';
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import Navigation from "./src/navigation/index";
-import { GluestackUIProvider } from '@gluestack-ui/themed';
-import { config } from '@gluestack-ui/config';
+//import 'react-native-gesture-handler';
+import { Provider } from "react-redux";
+import HomeScreen from "./src/screens/HomeScreen";
+import store from "./src/redux/store";
 
 const App = () => {
   return (
-    <SafeAreaProvider>
-      <GluestackUIProvider config={config}>
-        <Navigation />   
-      </GluestackUIProvider>           
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <HomeScreen />
+    </Provider>
   );
 };
 
