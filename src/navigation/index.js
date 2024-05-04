@@ -1,5 +1,6 @@
 import React from "react";
 import { Platform } from "react-native";
+import { useSelector } from "react-redux";
 import { KeyboardAvoidingView } from "@gluestack-ui/themed";
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -11,8 +12,10 @@ import DetailScreen from "../screens/DetailScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import DisplaySettingScreen from "../screens/DisplaySettingScreen";
 import AccountSettingScreen from "../screens/AccountSettingScreen";
-
+import LoginScreen from "../screens/LoginScreen";
 import NullScreen from "../screens/NullScreen";
+
+import { selectHasLogin } from "../redux/accountSlice";
 
 import ActionButton from "../components/ActionButton";
 
@@ -24,15 +27,21 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const Navigation = () => {
+  const hasLogin = useSelector(selectHasLogin);
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={Platform.select({ ios: 0, android: -500 })}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       flex={1}
     >
-      <NavigationContainer theme={MyTheme}>
-        <MyTabs />
-      </NavigationContainer>
+      {
+        !hasLogin ? <LoginScreen /> : (
+          <NavigationContainer theme={MyTheme}>
+            <MyTabs />
+          </NavigationContainer>          
+        )
+      }
+
     </KeyboardAvoidingView>
   );
 };

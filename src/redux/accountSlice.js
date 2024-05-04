@@ -7,6 +7,9 @@ const initialState = {
       email: "",
       adrs: "",
       tel: ""
+   },
+   login: {
+      hasLogin: false,
    }
 };
 
@@ -16,15 +19,22 @@ const accountSlice = createSlice({
    reducers: {
       setGeneralAccountInfo: (state, action) => {
          state.general = action.payload;
+      },
+      login: (state) => {
+         state.login.hasLogin = true;
+      },
+      logout: (state) => {
+         state.login.hasLogin = false;
       }
    },
 });
 
 // export state to global
 export const selectGeneral = (state) => state.account.general;
+export const selectHasLogin = (state) => state.account.login.hasLogin;
 
 // export actions to global
-export const { setGeneralAccountInfo } = accountSlice.actions;
+export const { setGeneralAccountInfo, login, logout } = accountSlice.actions;
 
 // export reducer to global
 export default accountSlice.reducer;
